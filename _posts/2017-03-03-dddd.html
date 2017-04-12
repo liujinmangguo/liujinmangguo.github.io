@@ -1,0 +1,118 @@
+---
+layout: default
+title: 美丽的小镇
+---
+
+<h2>{{page.title}}</h2>
+<p>我的第二编文章</p>
+<p>{{page.date | date_to_string}}</p>
+<style type="text/css">
+		canvas{
+			display: block;
+			margin:0px auto;
+		}
+	</style>
+<div class="wrap">
+	<canvas id="canvas1" width="200" height="200"></canvas>
+	<canvas id="canvas2"></canvas>
+	<canvas id="canvas3"></canvas>
+</div>
+
+<script type="text/javascript">
+	window.onload = function(){
+		var canvas1 = document.getElementById('canvas1');
+		var context = canvas1.getContext('2d');
+
+		context.beginPath();
+		context.moveTo(10, 10);
+		context.lineTo(100, 100);
+		context.lineTo(10, 100);
+		context.closePath();
+
+		context.fillStyle = "#888";
+		context.fill();
+
+		context.lineWidth = 5;
+		context.strokeStyle = 'red';
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo(120,10);
+		context.lineTo(150, 160);
+		context.lineTo(120, 160);
+		context.lineTo(120,10);
+		context.closePath();
+
+		context.fillStyle = '#20a';
+		context.fill();
+		context.strokeStyle = "black";
+		context.stroke();
+
+		context.beginPath();
+		context.fillStyle = 'yellow';
+		context.fillRect(150, 150, 30, 30);
+		context.closePath();
+
+		context.beginPath();
+		context.strokeStyle = 'green';
+		context.lineWidth = 4;
+		context.strokeRect(150, 150, 30, 30);
+		context.closePath();
+
+		context.beginPath();
+		context.clearRect(20, 20, 100, 100);
+		context.closePath();
+
+		var canvas2 = document.getElementById('canvas2');
+		canvas2.width = 200;
+		canvas2.height = 200;
+		var ctx = canvas2.getContext('2d');
+
+		ctx.beginPath();
+		// 设置字体
+		ctx.font = "Bold 20px Arial"; 
+		// 设置对齐方式
+		ctx.textAlign = "left";
+		// 设置填充颜色
+		ctx.fillStyle = "#008600"; 
+		// 设置字体内容，以及在画布上的位置
+		ctx.fillText("Hello!", 10, 50); 
+		// 绘制空心字
+		ctx.strokeText("Hello!", 10, 100);
+		ctx.closePath();
+
+		ctx.beginPath(); 
+		ctx.arc(90, 90, 50, 0, Math.PI*2, true); 
+		ctx.fillStyle = "#000000"; 
+		ctx.fill();
+
+		ctx.beginPath(); 
+		ctx.arc(160, 160, 50, 0, Math.PI*2, true); 
+		ctx.lineWidth = 1.0; 
+		ctx.strokeStyle = "#000"; 
+		ctx.stroke();
+
+		var canvas3 = document.getElementById('canvas3');
+		canvas3.width = 400;
+		canvas3.height = 400;
+		var c = canvas3.getContext('2d');
+        c.beginPath();
+		var myGradient = c.createLinearGradient(0, 0, 0, 160); 
+ 
+
+		myGradient.addColorStop(0, "#BABABA"); 
+		myGradient.addColorStop(1, "#636363");
+		c.fillStyle = myGradient;
+		c.fillRect(10,10,200,100);
+		c.closePath();
+
+		c.shadowOffsetX = 10; // 设置水平位移
+		c.shadowOffsetY = 10; // 设置垂直位移
+		c.shadowBlur = 5; // 设置模糊度
+		c.shadowColor = "rgba(0,0,0,0.5)"; // 设置阴影颜色
+
+		c.fillStyle = "#CC0000"; 
+		c.fillRect(10,10,200,100);
+
+	}
+</script>
