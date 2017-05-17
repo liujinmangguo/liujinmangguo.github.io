@@ -1,8 +1,159 @@
 ---
 layout: default
-title: 你好，世界
+title: JS五种排序和二种搜索
 ---
 
 <h2>{{page.title}}</h2>
-<p>我的第一编文章</p>
 <p>{{page.date | date_to_string}}</p>
+<pre>
+	<code>
+		var ArrayList = function(){
+
+			var array = [];
+
+			this.add = function(arr){
+				array = array.concat(arr);
+			};
+
+			this.insert = function(e){
+				array.push(e);
+			};
+
+			this.toString = function(){
+				console.log(array.join('-'));
+			};
+
+		    function swap( index1, index2){
+		    	var temp = array[index1];
+		    	array[index1] = array[index2];
+		    	array[index2] = temp;
+		    }
+
+		// 冒泡排序：比较任何两个相邻的项，如果第一个比第二个大，则交换它们。
+			this.bubbleSort = function(){
+				var length = array.length;
+				for(var i=0; i<length; i++){
+					for(var j=0; j<length-1-i; j++){
+						if(array[j] > array[j+1]) swap(j, j+1);
+					}
+				}
+			};
+
+		// 选择排序：一种原址比较排序算法。选择排序大致的思路是找到最小值并将其放置在第一位，
+		// 接着找到第二小的值并将其放在第二位，以此类推。
+			this.selectionSort = function(){
+				var length = array.length;
+				var indexMin;
+				for(var i = 0; i<length-1; i++){
+					indexMin = i;
+					for(var j =i; j<length; j++){
+						if(array[indexMin]>array[j]){
+							indexMin = j
+						}
+					}
+					if(i!==indexMin){
+						swap(i, indexMin)
+					}
+				}
+			};
+
+		// 插入排序：假定第一项已经排序了，接着，它和第二项进行比较，第二项若比第一项小插入到第一项的前面，
+		// 接着和第三项比较（它是该插入到第一、第二还是第三的位置呢？），以此类推。
+			this.insertionSort = function(){
+				var length = array.length;
+				var temp, j;
+				for(var i = 1; i<length; i++){
+					j = i;
+					temp = array[i];
+		            while(j>0 && array[j-1]>temp){
+		            	array[j] = array[j-1];
+		            	j--;
+		            }
+		            array[j] = temp;	
+				}
+			};
+
+		//归并排序： 一种分治算法。将原始数组切分成较小的数组，直到每个小数组只有一个位置，
+		// 接着将小数组归并成较大的数组，直到最后只有一个排序完毕的大数组。
+			this.mergeSort = function(){
+			    var mergeSortRec = function(arr){
+			    	var length = arr.length;
+			    	if(length<2) return arr;
+			    	var mid = Math.floor(length/2);
+			    	var left = arr.slice(0, mid);
+			    	var right = arr.slice(mid);
+			    	return merge(mergeSortRec(left), mergeSortRec(right))
+			    }
+			    var merge = function(left, right){
+			    	var result = [];
+			    	var il = 0,
+			    	    ir = 0;
+			    	while(il<left.length && ir<right.length){
+			    		left[il] < right[ir] ? result.push(left[il++]) : result.push(right[ir++]);
+			    	}
+			    	while (il < left.length){ 
+						result.push(left[il++]);
+				    }
+				    while (ir < right.length){
+						result.push(right[ir++]);
+					}
+					return result;
+				}
+				array = mergeSortRec(array);
+			};
+
+		// 快速排序：从数组中选择一项作为主元， 比它小的放左边，大的放右边，以此类推
+			this.quickSort = function(){
+				
+				var quick = function(array){
+					if(array.length < 2) return array;
+					var midd = array.splice(0,1);
+					var main = midd[0];
+					var left = [];
+					var right = [];
+					var length = array.length;
+					for(var i=0; i<length; i++){
+						array[i]<main ?	left.push(array[i]) : right.push(array[i]);
+					}
+					return array = quick(left).concat(midd, quick(right));
+				}
+				array = quick(array);
+			};
+
+		// 顺序或线性搜索是最基本的搜索算法。它的机制是，将每一个数据结构中的元素和我们要找
+		// 的元素做比较。顺序搜索是最低效的一种搜索算法。
+			this.sequentialSearch = function(item){
+				for(var i=0; i<array.length; i++){
+					if(array[i]===item){
+						return i;
+					}
+				}
+				return -1;
+			};
+
+		// 二分搜索：
+		// (1) 选择数组的中间值。
+		// (2) 如果选中值是待搜索值，那么算法执行完毕（值找到了）。
+		// (3) 如果待搜索值比选中值要小，则返回步骤1并在选中值左边的子数组中寻找。
+		// (4) 如果待搜索值比选中值要大，则返回步骤1并在选种值右边的子数组中寻找。
+			this.binarySearch = function(item){
+				this.quickSort();
+				var low = 0;
+				var high = array.length - 1;
+				var mid, element;
+				while(low<high){
+					mid = Math.floor((low+high)/2);
+					element = array[mid];
+					if(item === element){
+						return mid;
+					}else if (item > element){
+			            low = mid + 1;
+					}else{
+						high = mid - 1;
+					}
+				}
+				return -1 ;
+			};
+		}
+	</code>
+</pre>
